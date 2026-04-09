@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Interactive 2 - Sidebar Layout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Navigation - KIRI VERTIKAL */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 80px;
+            height: 100vh;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(25px);
+            border-right: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar:hover {
+            width: 280px;
+        }
+
+        .digital {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            writing-mode: vertical-rl;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transition: opacity 0.3s ease 0.2s;
+        }
+
+        .sidebar:hover .digital {
+            opacity: 1;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            list-style: none;
+            flex: 1;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 1rem;
+            border-radius: 0 20px 20px 0;
+            transition: all 0.3s ease;
+            width: 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link i {
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link span {
+            position: absolute;
+            left: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            opacity: 0;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar:hover .nav-link {
+            width: 260px;
+            padding-left: 2rem;
+        }
+
+        .sidebar:hover .nav-link span {
+            opacity: 1;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        .nav-link.active {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: 80px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInRight 1s ease forwards;
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Horizontal Scroll Portfolio */
+        .portfolio {
+            padding: 5rem 0;
+            background: rgba(255,255,255,0.1);
+            margin: 5rem 0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .portfolio h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .horizontal-scroll {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 2rem;
+            padding: 2rem 0;
+            scrollbar-width: none;
+        }
+
+        .horizontal-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .project-card {
+            flex: 0 0 400px;
+            height: 500px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            scroll-snap-align: start;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .project-card h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .project-card p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Contact Form */
+        .contact {
+            max-width: 600px;
+            margin: 5rem auto;
+            padding: 3rem;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .contact h2 {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.9);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #fff, #f0f0f0);
+            color: #667eea;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 60px; }
+            .sidebar:hover { width: 240px; }
+            .main { margin-left: 60px; padding: 1rem; }
+            .hero h1 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SIDEBAR VERTIKAL KIRI -->
+    <nav class="sidebar">
+        <div class="digital">
+            <i class="fas fa-rocket"></i> DIGITAL
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#home" class="nav-link active"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li><a href="#portfolio" class="nav-link"><i class="fas fa-images"></i><span>Portfolio</span></a></li>
+            <li><a href="#about" class="nav-link"><i class="fas fa-user"></i><span>About</span></a></li>
+            <li><a href="#contact" class="nav-link"><i class="fas fa-envelope"></i><span>Contact</span></a></li>
+        </ul>
+    </nav>
+
+    <main class="main">
+        <!-- Hero -->
+        <section class="hero" id="home">
+            <h1>Digital Studio</h1>
+            <p style="font-size: 1.4rem; max-width: 600px; opacity: 0.9;">Hover sidebar → Portfolio horizontal scroll → Contact form</p>
+        </section>
+
+        <!-- Horizontal Portfolio -->
+        <section class="portfolio" id="portfolio">
+            <h2>Recent Projects</h2>
+            <div class="horizontal-scroll">
+                <div class="project-card">
+                    <h3>E-Commerce Site</h3>
+                    <p>Modern online store with React & Tailwind</p>
+                    <div style="margin-top: 2rem;">
+                        <span style="background: #10b981; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; margin-right: 0.5rem;">React</span>
+                        <span style="background: #3b82f6; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">Tailwind</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Dashboard App</h3>
+                    <p>Analytics dashboard with real-time data</p>
+                    <div style="margin-top: 2rem;">
+                        <span style="background: #8b5cf6; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">Vue.js</span>
+                        <span style="background: #f59e0b; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">Chart.js</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Mobile App</h3>
+                    <p>Cross-platform fitness tracker app</p>
+                    <div style="margin-top: 2rem;">
+                        <span style="background: #ef4444; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">Flutter</span>
+                        <span style="background: #14b8a6; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">Firebase</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section id="about" style="padding: 5rem 0; text-align: center; color: white;">
+            <h2 style="font-size: 3rem; margin-bottom: 2rem;">About Us</h2>
+            <p style="font-size: 1.3rem; max-width: 800px; margin: 0 auto; opacity: 0.9;">
+                We are a digital studio creating beautiful experiences. 
+                Specializing in modern web, mobile apps, and UI/UX design.
+            </p>
+        </section>
+
+        <!-- Contact Form -->
+        <section class="contact" id="contact">
+            <h2>Get In Touch</h2>
+            <form>
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea rows="5" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('.nav-link[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+                
+                // Active nav
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+
+        // Form submit
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Message sent! 🎉');
+        });
+
+        // Horizontal scroll snap
+        const scrollContainer = document.querySelector('.horizontal-scroll');
+        scrollContainer.addEventListener('scroll', () => {
+            const cards = scrollContainer.querySelectorAll('.project-card');
+            cards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                if (rect.left < window.innerWidth / 2 && rect.right > window.innerWidth / 2) {
+                    card.style.transform = 'scale(1.05)';
+                } else {
+                    card.style.transform = 'scale(1)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
